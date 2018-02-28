@@ -43,30 +43,51 @@ def keyword_encrypt(text, password):
 
     encrypted_text = ""  # initialize an empty encrypted text String object
 
-    new_alphabet = dw.createAlphabet(password)
+    new_alphabet = dw.create_alphabet(password)
 
     for letter in text:
-        encrypted_text += new_alphabet[letter]
+        if letter in sets.small:
+            encrypted_text += new_alphabet[sets.small.index(letter)]
+        elif letter in sets.caps:
+            encrypted_text += new_alphabet[sets.caps.index(letter)].upper()
+        else:
+            encrypted_text += letter
 
     return encrypted_text
+
+
+def keyword_decrypt(text, password):
+    """ decryption using password to create dependent set of characters """
+
+    decrypted_text = ""
+    new_alphabet = dw.create_alphabet(password)
+    for letter in text:
+        if letter in sets.small:
+            decrypted_text += sets.small[new_alphabet.index(letter)]
+        elif letter in sets.caps:
+            decrypted_text += sets.caps[new_alphabet.index(letter.lower())]
+        else:
+            decrypted_text += letter
+
+    return decrypted_text
 
 
 def square_encrypt(text, password=''):
     encrypted_text = ""  # initialize an empty encrypted text String object
     text = text.lower()
-    mat = dw.create_matrix(sets.small, password=password)
-    print(type(mat))
-    """print(mat)
+    text = dw.remove_numbers(text)
+    new_alphabet = dw.create_alphabet(password)
+    new_alphabet = new_alphabet.replace("q", "")
+
+    print(dw.alphabet_matrix(password))
     for letter in text:
         if letter in sets.small:
-            row = int(mat.index(letter) / 5)
-            col = int(sets.small.index(letter) % 5)
+            row = int(new_alphabet.index(letter) / 5)
+            col = int(new_alphabet.index(letter) % 5)
             encrypted_text += str(row + 1) + str(col + 1)
-        elif letter in sets.numbers:
-            raise ValueError("Can't use numbers for this encryption.")
         else:
             encrypted_text += letter
-    return encrypted_text"""
+    return encrypted_text
 
 
 def square_decrypt(text, password='', alphabet='small'):
@@ -92,4 +113,4 @@ def square_decrypt(text, password='', alphabet='small'):
     return decrypted_text
 
 
-print(dw.create_matrix(sets.small))
+print(square_encrypt("pato je cooLq"))

@@ -1,4 +1,5 @@
 import numpy as np
+import sets
 
 
 def list_overlap(alphabet, letter, shift):
@@ -28,24 +29,33 @@ def remove_duplicity(word):
     return new_word
 
 
-def create_alphabet(alphabet, password):
+def remove_numbers(word):
+    """ removes numbrs from a word """
+    new_word = ""
+    for letter in word:
+        if letter not in sets.numbers:
+            new_word += letter
+    return new_word
+
+
+def create_alphabet(password):
     """ creates a new alphabet String object dependent on password """
 
+    password = remove_numbers(password).lower()
     password = remove_duplicity(password)  # password's characters can't be repeated
 
-    for letter in alphabet:
+    for letter in sets.small:
         if letter not in password:
             password += letter
 
     return password
 
 
-def create_matrix(alphabet, password='', removed_letter='q'):
+def alphabet_matrix(password='', removed_letter='q'):
     matrix = []
     list_row = []
     num = 0
-    alphabet = create_alphabet(alphabet, password)
-    alpha_list = list(alphabet)
+    alpha_list = list(create_alphabet(password))
     alpha_list.remove(removed_letter)
 
     for _ in range(5):
@@ -54,4 +64,5 @@ def create_matrix(alphabet, password='', removed_letter='q'):
             num = num + 1
         matrix.append(list_row)
         list_row = []
-    return matrix
+    return np.array(matrix)
+

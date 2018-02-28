@@ -1,4 +1,4 @@
-from crypt import keyword_encrypt
+from crypt import keyword_decrypt
 from dirty_work import create_alphabet
 
 
@@ -11,7 +11,7 @@ def main():
         text = input("Type text: ")
         if text == 'q':
             break
-        print(keyword_encrypt(text, password))
+        print(keyword_decrypt(text, password))
 
 
 if __name__ == '__main__':
