@@ -30,12 +30,10 @@ def remove_duplicity(word):
 
 
 def remove_numbers(word):
-    """ removes numbrs from a word """
-    new_word = ""
-    for letter in word:
-        if letter not in sets.numbers:
-            new_word += letter
-    return new_word
+    """ removes numbers from a word """
+    for num in sets.numbers:
+        word = word.replace(str(num), "")
+    return word
 
 
 def create_alphabet(password):
@@ -65,4 +63,3 @@ def alphabet_matrix(password='', removed_letter='q'):
         matrix.append(list_row)
         list_row = []
     return np.array(matrix)
-

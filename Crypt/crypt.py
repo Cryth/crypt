@@ -112,5 +112,3 @@ def square_decrypt(text, password='', alphabet='small'):
             row = 0
     return decrypted_text
 
-
-print(square_encrypt("pato je cooLq"))
