@@ -4,6 +4,10 @@ import dirty_work as dw
 
 def caesar_cipher(text, shift=-3):
     """ encrypting by shifting in alphabet """
+    # new_alphabet_list = [sets.small[sets.small.index(letter) + shift) % 26] for letter in sets.small]
+    # new_alphabet = ""
+    # for letter in new_alphabet_list:
+    #     new_alphabet += letter
     new_text = ""
 
     for letter in text:
