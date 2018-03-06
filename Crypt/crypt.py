@@ -2,22 +2,23 @@ import sets as sets
 import dirty_work as dw
 
 
-def caesar_encrypt(text, shift=-3):
+def caesar_cipher(text, shift=-3):
     """ encrypting by shifting in alphabet """
-
-    encrypted_text = ""  # initialize an empty encrypted text String object
+    new_text = ""
 
     for letter in text:
         if letter in sets.small:
-            encrypted_text += sets.small[dw.list_overlap(sets.small, letter, shift)]
+            new_index = (sets.small.index(letter) + shift) % 26
+            new_text += sets.small[new_index]
         elif letter in sets.caps:
-            encrypted_text += sets.caps[dw.list_overlap(sets.caps, letter, shift)]
+            new_index = (sets.caps.index(letter) + shift) % 26
+            new_text += sets.caps[new_index]
         elif letter in sets.numbers:
-            encrypted_text += sets.numbers[dw.list_overlap(sets.numbers, letter, shift)]
+            new_index = (sets.numbers.index(letter) + shift) % 10
+            new_text += sets.numbers[new_index]
         else:
-            encrypted_text += letter
-
-    return encrypted_text
+            new_text += letter
+    return new_text
 
 
 def reversed_alphabet(text):

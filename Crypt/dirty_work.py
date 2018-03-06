@@ -2,21 +2,6 @@ import numpy as np
 import sets
 
 
-def list_overlap(alphabet, letter, shift):
-    """ if shifting gets beyond character set's length """
-
-    shift = shift % len(alphabet)  # corrects inputs bigger than character set's length
-
-    position = alphabet.index(letter)
-
-    if position + shift + 1 > len(alphabet):  # checks if shifted position is going to be beyond character set's length
-        position = position + shift - len(alphabet)  # shifting with overlap
-    else:
-        position = position + shift  # shifting
-
-    return position
-
-
 def remove_duplicity(word):
     """ removes duplicity of characters from a word """
 
