@@ -86,6 +86,7 @@ def keyword(text, password, decrypt=False):
 
 def polybius_square(text, decrypt=False):
     new_text = ""
+    new_alphabet = sets.caps.replace("J", "")
 
     if decrypt:
         row = 0
@@ -94,7 +95,7 @@ def polybius_square(text, decrypt=False):
             if letter in sets.numbers:
                 if row > 0:
                     index = (row - 1) * 5 + int(letter) - 1
-                    new_text += sets.caps[index]
+                    new_text += new_alphabet[index]
                     row = 0
                 else:
                     row = int(letter)
@@ -102,13 +103,12 @@ def polybius_square(text, decrypt=False):
                 row = 0
                 new_text += letter
     else:
-        text = text.lower()
+        text = text.upper()
         text = dw.remove_numbers(text)
-        text = text.replace("j", "i")
-        new_alphabet = sets.small.replace("j", "")
+        text = text.replace("J", "I")
 
         for letter in text:
-            if letter in sets.small:
+            if letter in new_alphabet:
                 row = int(new_alphabet.index(letter) / 5) + 1
                 col = int(new_alphabet.index(letter) % 5) + 1
                 new_text += str(row) + str(col)

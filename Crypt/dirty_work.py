@@ -9,7 +9,6 @@ def remove_duplicity(word):
     for letter in word:
         if letter not in new_word:
             new_word += letter
-
     return new_word
 
 
@@ -23,7 +22,7 @@ def remove_numbers(word):
 def only_letters(word):
     """ removes everything but letters """
     for letter in word:
-        if letter not in sets.small or letter not in sets.caps:
+        if (letter not in sets.small) and (letter not in sets.caps):
             word = word.replace(letter, "")
     return word
 
@@ -37,19 +36,3 @@ def create_set(password):
         if letter not in password:
             password += letter
     return password
-
-
-def alphabet_matrix(password='', removed_letter='q'):
-    matrix = []
-    list_row = []
-    num = 0
-    alpha_list = list(create_set(password))
-    alpha_list.remove(removed_letter)
-
-    for _ in range(5):
-        for _ in range(5):
-            list_row.append(alpha_list[num])
-            num = num + 1
-        matrix.append(list_row)
-        list_row = []
-    return np.array(matrix)
