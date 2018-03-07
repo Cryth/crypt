@@ -63,6 +63,32 @@ def rot13(text):
     return new_text
 
 
+def vigenere(text, password=sets.small, decrypt=False):
+    new_text = ""
+    password = password.lower()
+    password = dw.remove_numbers(password)
+    pp = 0  # password position
+
+    for letter in text:
+        if letter in sets.small:
+            if decrypt:
+                new_index = (sets.small.index(letter) - sets.small.index(password[pp])) % 26
+            else:
+                new_index = (sets.small.index(letter) + sets.small.index(password[pp])) % 26
+            new_text += sets.small[new_index]
+            pp = (pp + 1) % len(password)
+        elif letter in sets.caps:
+            if decrypt:
+                new_index = (sets.caps.index(letter) - sets.small.index(password[pp])) % 26
+            else:
+                new_index = (sets.caps.index(letter) + sets.small.index(password[pp])) % 26
+            new_text += sets.caps[new_index]
+            pp = (pp + 1) % len(password)
+        else:
+            new_text += letter
+    return new_text
+
+
 def keyword_encrypt(text, password):
     """ encryption using password to create dependent set of characters """
 
