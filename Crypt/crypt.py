@@ -63,27 +63,47 @@ def rot13(text):
     return new_text
 
 
-def vigenere(text, password=sets.small, decrypt=False):
+def vigenere(text, key=sets.small, decrypt=False):
     new_text = ""
-    password = password.lower()
-    password = dw.remove_numbers(password)
-    pp = 0  # password position
+    key = key.lower()
+    key = dw.remove_numbers(key)
+    kp = 0  # key position
 
     for letter in text:
         if letter in sets.small:
             if decrypt:
-                new_index = (sets.small.index(letter) - sets.small.index(password[pp])) % 26
+                new_index = (sets.small.index(letter) - sets.small.index(key[kp])) % 26
             else:
-                new_index = (sets.small.index(letter) + sets.small.index(password[pp])) % 26
+                new_index = (sets.small.index(letter) + sets.small.index(key[kp])) % 26
             new_text += sets.small[new_index]
-            pp = (pp + 1) % len(password)
+            kp = (kp + 1) % len(key)
         elif letter in sets.caps:
             if decrypt:
-                new_index = (sets.caps.index(letter) - sets.small.index(password[pp])) % 26
+                new_index = (sets.caps.index(letter) - sets.small.index(key[kp])) % 26
             else:
-                new_index = (sets.caps.index(letter) + sets.small.index(password[pp])) % 26
+                new_index = (sets.caps.index(letter) + sets.small.index(key[kp])) % 26
             new_text += sets.caps[new_index]
-            pp = (pp + 1) % len(password)
+            kp = (kp + 1) % len(key)
+        else:
+            new_text += letter
+    return new_text
+
+
+def beaufort(text, key=sets.small):
+    new_text = ""
+    key = key.lower()
+    key = dw.remove_numbers(key)
+    kp = 0  # key position
+
+    for letter in text:
+        if letter in sets.small:
+            new_index = (sets.small.index(key[kp]) - sets.small.index(letter)) % 26
+            new_text += sets.small[new_index]
+            kp = (kp + 1) % len(key)
+        elif letter in sets.caps:
+            new_index = (sets.small.index(key[kp]) - sets.caps.index(letter)) % 26
+            new_text += sets.caps[new_index]
+            kp = (kp + 1) % len(key)
         else:
             new_text += letter
     return new_text
