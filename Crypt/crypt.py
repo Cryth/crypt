@@ -63,8 +63,10 @@ def rot13(text):
     return new_text
 
 
-def vigenere(text, key=sets.small, decrypt=False):
+def vigenere(text, key=sets.small, decrypt=False, autokey=False):
     new_text = ""
+    if autokey:
+        key = key + text
     key = key.lower()
     key = dw.remove_numbers(key)
     kp = 0  # key position
