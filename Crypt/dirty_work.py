@@ -4,7 +4,6 @@ import sets
 
 def remove_duplicity(word):
     """ removes duplicity of characters from a word """
-
     new_word = ""
 
     for letter in word:
@@ -21,16 +20,22 @@ def remove_numbers(word):
     return word
 
 
+def only_letters(word):
+    """ removes everything but letters """
+    for letter in word:
+        if letter not in sets.small or letter not in sets.caps:
+            word = word.replace(letter, "")
+    return word
+
+
 def create_alphabet(password):
     """ creates a new alphabet String object dependent on password """
-
     password = remove_numbers(password).lower()
     password = remove_duplicity(password)  # password's characters can't be repeated
 
     for letter in sets.small:
         if letter not in password:
             password += letter
-
     return password
 
 

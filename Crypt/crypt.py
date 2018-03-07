@@ -68,7 +68,7 @@ def vigenere(text, key=sets.small, decrypt=False, autokey=False):
     if autokey:
         key = key + text
     key = key.lower()
-    key = dw.remove_numbers(key)
+    key = dw.only_letters(key)
     kp = 0  # key position
 
     for letter in text:
@@ -94,7 +94,7 @@ def vigenere(text, key=sets.small, decrypt=False, autokey=False):
 def beaufort(text, key=sets.small):
     new_text = ""
     key = key.lower()
-    key = dw.remove_numbers(key)
+    key = dw.only_letters(key)
     kp = 0  # key position
 
     for letter in text:
