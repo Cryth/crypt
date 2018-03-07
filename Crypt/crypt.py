@@ -2,8 +2,8 @@ import sets as sets
 import dirty_work as dw
 
 
-def caesar_cipher(text, shift=-3):
-    """ encrypting by shifting in alphabet """
+def caesar(text, shift=-3):
+    """ shifting in alphabet """
     # new_alphabet_list = [sets.small[sets.small.index(letter) + shift) % 26] for letter in sets.small]
     # new_alphabet = ""
     # for letter in new_alphabet_list:
@@ -25,22 +25,42 @@ def caesar_cipher(text, shift=-3):
     return new_text
 
 
-def reversed_alphabet(text):
-    """ encrypting by reversing alphabet """
-
-    encrypted_text = ""  # initialize an empty encrypted text String object
+def atbash(text):
+    """ reversing alphabet """
+    new_text = ""
 
     for letter in text:
         if letter in sets.small:
-            encrypted_text += sets.small[(sets.small.index(letter) + 1) * -1]
+            new_index = (sets.small.index(letter) + 1) * -1
+            new_text += sets.small[new_index]
         elif letter in sets.caps:
-            encrypted_text += sets.caps[(sets.caps.index(letter) + 1) * -1]
+            new_index = (sets.caps.index(letter) + 1) * -1
+            new_text += sets.caps[new_index]
         elif letter in sets.numbers:
-            encrypted_text += sets.numbers[(sets.numbers.index(letter) + 1) * -1]
+            new_index = (sets.numbers.index(letter) + 1) * -1
+            new_text += sets.numbers[new_index]
         else:
-            encrypted_text += letter
+            new_text += letter
+    return new_text
 
-    return encrypted_text
+
+def rot13(text):
+    """ rotate by 13 places """
+    new_text = ""
+
+    for letter in text:
+        if letter in sets.small:
+            new_index = (sets.small.index(letter) - 13) % 26
+            new_text += sets.small[new_index]
+        elif letter in sets.caps:
+            new_index = (sets.small.index(letter) - 13) % 26
+            new_text += sets.small[new_index]
+        elif letter in sets.numbers:
+            new_index = (sets.numbers.index(letter) - 5) % 10
+            new_text += sets.numbers[new_index]
+        else:
+            new_text += letter
+    return new_text
 
 
 def keyword_encrypt(text, password):
