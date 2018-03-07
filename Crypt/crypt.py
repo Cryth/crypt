@@ -53,8 +53,8 @@ def rot13(text):
             new_index = (sets.small.index(letter) - 13) % 26
             new_text += sets.small[new_index]
         elif letter in sets.caps:
-            new_index = (sets.small.index(letter) - 13) % 26
-            new_text += sets.small[new_index]
+            new_index = (sets.caps.index(letter) - 13) % 26
+            new_text += sets.caps[new_index]
         elif letter in sets.numbers:
             new_index = (sets.numbers.index(letter) - 5) % 10
             new_text += sets.numbers[new_index]
