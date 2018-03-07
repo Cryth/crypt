@@ -63,6 +63,60 @@ def rot13(text):
     return new_text
 
 
+def keyword(text, password, decrypt=False):
+    """ encryption using password to create dependent set of characters """
+    new_text = ""
+    new_set = dw.create_set(password)
+
+    for letter in text:
+        if letter in sets.small:
+            if decrypt:
+                new_text += sets.small[new_set.index(letter)]
+            else:
+                new_text += new_set[sets.small.index(letter)]
+        elif letter in sets.caps:
+            if decrypt:
+                new_text += sets.caps[new_set.index(letter.lower())]
+            else:
+                new_text += new_set[sets.caps.index(letter)].upper()
+        else:
+            new_text += letter
+    return new_text
+
+
+def polybius_square(text, decrypt=False):
+    new_text = ""
+
+    if decrypt:
+        row = 0
+
+        for letter in text:
+            if letter in sets.numbers:
+                if row > 0:
+                    index = (row - 1) * 5 + int(letter) - 1
+                    new_text += sets.caps[index]
+                    row = 0
+                else:
+                    row = int(letter)
+            else:
+                row = 0
+                new_text += letter
+    else:
+        text = text.lower()
+        text = dw.remove_numbers(text)
+        text = text.replace("j", "i")
+        new_alphabet = sets.small.replace("j", "")
+
+        for letter in text:
+            if letter in sets.small:
+                row = int(new_alphabet.index(letter) / 5) + 1
+                col = int(new_alphabet.index(letter) % 5) + 1
+                new_text += str(row) + str(col)
+            else:
+                new_text += letter
+    return new_text
+
+
 def vigenere(text, key=sets.small, decrypt=False, autokey=False):
     new_text = ""
     if autokey:
@@ -109,79 +163,3 @@ def beaufort(text, key=sets.small):
         else:
             new_text += letter
     return new_text
-
-
-def keyword_encrypt(text, password):
-    """ encryption using password to create dependent set of characters """
-
-    encrypted_text = ""  # initialize an empty encrypted text String object
-
-    new_alphabet = dw.create_alphabet(password)
-
-    for letter in text:
-        if letter in sets.small:
-            encrypted_text += new_alphabet[sets.small.index(letter)]
-        elif letter in sets.caps:
-            encrypted_text += new_alphabet[sets.caps.index(letter)].upper()
-        else:
-            encrypted_text += letter
-
-    return encrypted_text
-
-
-def keyword_decrypt(text, password):
-    """ decryption using password to create dependent set of characters """
-
-    decrypted_text = ""
-    new_alphabet = dw.create_alphabet(password)
-    for letter in text:
-        if letter in sets.small:
-            decrypted_text += sets.small[new_alphabet.index(letter)]
-        elif letter in sets.caps:
-            decrypted_text += sets.caps[new_alphabet.index(letter.lower())]
-        else:
-            decrypted_text += letter
-
-    return decrypted_text
-
-
-def square_encrypt(text, password=''):
-    encrypted_text = ""  # initialize an empty encrypted text String object
-    text = text.lower()
-    text = dw.remove_numbers(text)
-    new_alphabet = dw.create_alphabet(password)
-    new_alphabet = new_alphabet.replace("q", "")
-
-    print(dw.alphabet_matrix(password))
-    for letter in text:
-        if letter in sets.small:
-            row = int(new_alphabet.index(letter) / 5)
-            col = int(new_alphabet.index(letter) % 5)
-            encrypted_text += str(row + 1) + str(col + 1)
-        else:
-            encrypted_text += letter
-    return encrypted_text
-
-
-def square_decrypt(text, password='', alphabet='small'):
-    decrypted_text = ""  # initialize an empty decrypted text String object
-
-    if alphabet.lower() == 'large' or 'l':
-        alphabet = sets.caps
-        password = password.upper()
-    else:
-        alphabet = sets.caps
-        password = password.lower()
-    mat = dw.create_matrix(alphabet, password=password)
-    row = 0
-    for num in text:
-        if num in sets.numbers:
-            if row > 0:
-                decrypted_text += mat[row - 1][num - 1]
-                row = 0
-            else:
-                row = num
-        else:
-            row = 0
-    return decrypted_text
-

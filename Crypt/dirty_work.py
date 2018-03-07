@@ -28,9 +28,9 @@ def only_letters(word):
     return word
 
 
-def create_alphabet(password):
+def create_set(password):
     """ creates a new alphabet String object dependent on password """
-    password = remove_numbers(password).lower()
+    password = only_letters(password).lower()
     password = remove_duplicity(password)  # password's characters can't be repeated
 
     for letter in sets.small:
@@ -43,7 +43,7 @@ def alphabet_matrix(password='', removed_letter='q'):
     matrix = []
     list_row = []
     num = 0
-    alpha_list = list(create_alphabet(password))
+    alpha_list = list(create_set(password))
     alpha_list.remove(removed_letter)
 
     for _ in range(5):
