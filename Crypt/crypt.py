@@ -4,10 +4,10 @@ import dirty_work as dw
 
 def caesar(text, shift=-3):
     """ shifting in alphabet """
-    # new_alphabet_list = [sets.small[sets.small.index(letter) + shift) % 26] for letter in sets.small]
-    # new_alphabet = ""
-    # for letter in new_alphabet_list:
-    #     new_alphabet += letter
+    # new_set_list = [sets.small[sets.small.index(letter) + shift) % 26] for letter in sets.small]
+    # new_set = ""
+    # for letter in new_set_list:
+    #     new_set += letter
     new_text = ""
 
     for letter in text:
@@ -63,10 +63,10 @@ def rot13(text):
     return new_text
 
 
-def keyword(text, password, decrypt=False):
-    """ encryption using password to create dependent set of characters """
+def keyword(text, key, decrypt=False):
+    """ encryption using keyword to create dependent set of characters """
     new_text = ""
-    new_set = dw.create_set(password)
+    new_set = dw.create_set(key)
 
     for letter in text:
         if letter in sets.small:
@@ -86,7 +86,7 @@ def keyword(text, password, decrypt=False):
 
 def polybius_square(text, decrypt=False):
     new_text = ""
-    new_alphabet = sets.caps.replace("J", "")
+    new_set = sets.caps.replace("J", "")
 
     if decrypt:
         row = 0
@@ -95,7 +95,7 @@ def polybius_square(text, decrypt=False):
             if letter in sets.numbers:
                 if row > 0:
                     index = (row - 1) * 5 + int(letter) - 1
-                    new_text += new_alphabet[index]
+                    new_text += new_set[index]
                     row = 0
                 else:
                     row = int(letter)
@@ -108,12 +108,58 @@ def polybius_square(text, decrypt=False):
         text = text.replace("J", "I")
 
         for letter in text:
-            if letter in new_alphabet:
-                row = int(new_alphabet.index(letter) / 5) + 1
-                col = int(new_alphabet.index(letter) % 5) + 1
+            if letter in new_set:
+                row = int(new_set.index(letter) / 5) + 1
+                col = int(new_set.index(letter) % 5) + 1
                 new_text += str(row) + str(col)
             else:
                 new_text += letter
+    return new_text
+
+
+def playfair(text, key, decrypt=False, omitq=False):
+    text = dw.only_letters(text).lower()  # text can be only small letters
+    if decrypt == False:
+        text = dw.put_x(text)
+    new_set = dw.create_set(key)
+    if omitq:
+        new_set = new_set.replace("q", "") # remove q from square
+        text = text.replace("q", "") # remove q from the text
+    else:
+        new_set = new_set.replace("j", "") # remove j from square
+        text = text.replace("j", "i") # replace j by i in the text
+    new_text = ""
+    letter1 = "" # first letter of the pair
+
+    for letter in text:
+        if len(letter1) < 1:
+            letter1 = letter
+            continue
+        il1 = new_set.index(letter1) # index letter 1
+        il2 = new_set.index(letter) # index letter 2
+        # if letters appear on the same row, move them to the right of the square
+        if int(il1 / 5) ==  int(il2 / 5):
+            if decrypt:
+                new_text += dw.shift_in_square(letter1, new_set, -1)
+                new_text += dw.shift_in_square(letter, new_set, -1)
+            else:
+                new_text += dw.shift_in_square(letter1, new_set)
+                new_text += dw.shift_in_square(letter, new_set)
+        # if letters appear on the same column, move them down in the square
+        elif il1 % 5 == il2 % 5:
+            if decrypt:
+                new_text += dw.shift_in_square(letter1, new_set, -1, False)
+                new_text += dw.shift_in_square(letter, new_set, -1, False)
+            else:
+                new_text += dw.shift_in_square(letter1, new_set, row=False)
+                new_text += dw.shift_in_square(letter, new_set, row=False)
+        else:
+            new_index = il1 - (il1 % 5) + (il2 % 5)
+            new_text += new_set[new_index]
+            new_index = il2 - (il2 % 5) + (il1 % 5)
+            new_text += new_set[new_index]
+        letter1 = ""
+        new_text += " " # put space between pairs
     return new_text
 
 
