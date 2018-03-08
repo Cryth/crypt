@@ -230,6 +230,3 @@ def beaufort(text, key=sets.small):
         else:
             new_text += letter
     return new_text
-
-
-print(bacon("01111000001001101110", True))
