@@ -10,6 +10,17 @@ def remove_duplicity(word):
             new_word += letter
     return new_word
 
+def to_binary(number, length):
+    """ converts number to binary of desired bit length"""
+    number = int(number)
+    result = ""
+    while number > 0:
+        result = str(number % 2) + result
+        number = int(number / 2)
+    if len(result) < length:
+        result = (length-len(result)) * "0" + result
+
+    return result
 
 def remove_numbers(word):
     """ removes numbers from a word """

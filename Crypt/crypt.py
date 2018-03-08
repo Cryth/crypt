@@ -84,6 +84,27 @@ def keyword(text, key, decrypt=False):
     return new_text
 
 
+def bacon(text, decrypt=False):
+    result = ""
+    if decrypt:
+        text = list(text)
+        binary = [16, 8, 4, 2, 1]
+        pismena = [text[i:i + 5] for i in range(0, len(text), 5)]
+        for letter in pismena:
+            desifra = [a * int(b) for a, b in zip(binary, letter)]
+            result += sets.small[sum(desifra)]
+        return result
+
+    else:
+        for letter in text:
+            if letter in sets.small:
+                result += dw.to_binary(sets.small.index(letter), 5)
+            elif letter == " ":
+                result += letter
+
+        return result
+
+
 def polybius_square(text, decrypt=False):
     new_text = ""
     new_set = sets.caps.replace("J", "")
@@ -209,3 +230,6 @@ def beaufort(text, key=sets.small):
         else:
             new_text += letter
     return new_text
+
+
+print(bacon("01111000001001101110", True))
