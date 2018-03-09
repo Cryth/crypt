@@ -9,7 +9,6 @@ def vyjadri(a, b):
     while b:
         a, b = b, a%b
         if b > 0:
-            zvysok = ""
             print("{0} = {1}*{2} + {3}\t\t{3} = {0} - {1}*{2}".format(a, b, int(a/b), a%b))
 
 
@@ -40,17 +39,41 @@ def main():
     print("\tMULTIPLIKATÍVNA INVERZIA - ROZŠÍRENÝ EUKLIDOV ALGORITMUS\n")
     while True:
         a = input("Prvok: ")
+        if a == "exit()" or a == "quit()":
+            break
+
         b = input("Zvyšková trieda: ")
-        p, z = int(a), int(b)
+        if b == "exit()" or b == "quit()":
+            break
+
+        # ak nie su prirodzené čísla
+        try:
+            p, z = int(a), int(b)
+            if p <= 0 or z <= 0:
+                raise ValueError
+        except (TypeError, ValueError):
+            print("\n\tZADAJTE PRIRODZENÉ ČÍSLA\n")
+            continue
+
+        # p**-1 mod z
         print("\t\n{}**-1 mod {}\n".format(p, z))
-        nsd = solve_gcd(z, p)
+
+        nsd = solve_gcd(z, p) # euklidov algoritmus
         print("")
+
+        # platí len pre nsd == 1
         if nsd != 1:
             print("\tINVERZNÝ PRVOK NEEXISTUJE\n")
             continue
-        vyjadri(z, p)
-        x, y = flc(z, p)
+
+        vyjadri(z, p) # vyjadri zvyšky
+
+        x, y = flc(z, p) # vypočítaj inverzný prvok
+
+        # 1 = z*x + p*y
         print("\n{} = {}*{} + {}*{}\n".format(nsd, z, x, p, y))
+
+        # INVERZNÝ PRVOK JE y mod z = y%z
         print("\tINVERZNÝ PRVOK JE {} mod {} = {}\n".format(y, z, y%z))
 
 
