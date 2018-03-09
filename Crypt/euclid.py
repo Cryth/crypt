@@ -5,11 +5,12 @@ def gcd(a, b):
     return a
 
 
-def vyjadri_a(a, b):
+def vyjadri(a, b):
     while b:
         a, b = b, a%b
         if b > 0:
-            print("{} = {}*{} + {}".format(a, b, int(a/b), a%b))
+            zvysok = ""
+            print("{0} = {1}*{2} + {3}\t\t{3} = {0} - {1}*{2}".format(a, b, int(a/b), a%b))
 
 
 def gcd_generator(a, b):
@@ -21,6 +22,7 @@ def gcd_generator(a, b):
 def solve_gcd(a, b):
     for i in gcd_generator(a, b):
         print(i)
+    return gcd(a, b)
 
 
 def flc(a, b):
@@ -29,27 +31,27 @@ def flc(a, b):
     nsd = gcd(a, b)
     while True:
         y = a * x - nsd
-        # print(x, y / -b)
         if y % -b == 0:
-            return x, int((y / -b)%a)
+            return x, int(y / -b)
         x += 1
 
 
-
 def main():
-    print("ROZŠÍRENÝ EUKLIDOV ALGORITMUS\n")
+    print("\tMULTIPLIKATÍVNA INVERZIA - ROZŠÍRENÝ EUKLIDOV ALGORITMUS\n")
     while True:
-        stra = input("Inverzný prvok k: ")
-        strb = input("K základu: ")
-        a, b = int(stra), int(strb)
-        print("\n{}**-1 mod {}\n".format(a, b))
-        solve_gcd(b, a)
+        a = input("Prvok: ")
+        b = input("Zvyšková trieda: ")
+        p, z = int(a), int(b)
+        print("\t\n{}**-1 mod {}\n".format(p, z))
+        nsd = solve_gcd(z, p)
         print("")
-        nsd = gcd(b, a)
-        vyjadri_a(b, a)
-        x, y = flc(b, a)
-        print("\n{} = {}*{} - {}*{}\n".format(nsd, b, x, a, y))
-        print("INVERZNÝ PRVOK JE {}\n".format(y))
+        if nsd != 1:
+            print("\tINVERZNÝ PRVOK NEEXISTUJE\n")
+            continue
+        vyjadri(z, p)
+        x, y = flc(z, p)
+        print("\n{} = {}*{} + {}*{}\n".format(nsd, z, x, p, y))
+        print("\tINVERZNÝ PRVOK JE {} mod {} = {}\n".format(y, z, y%z))
 
 
 if __name__ == "__main__":
