@@ -86,6 +86,7 @@ def keyword(text, key, decrypt=False):
 
 def bacon(text, decrypt=False):
     result = ""
+    
     if decrypt:
         text = list(text)
         binary = [16, 8, 4, 2, 1]
@@ -99,9 +100,6 @@ def bacon(text, decrypt=False):
         for letter in text:
             if letter in sets.small:
                 result += dw.to_binary(sets.small.index(letter), 5)
-            elif letter == " ":
-                result += letter
-
         return result
 
 
