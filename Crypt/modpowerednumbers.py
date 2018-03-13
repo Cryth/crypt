@@ -1,12 +1,21 @@
 # coding=utf-8
 def main():
-    print("\n\tMODULO UMOCNENÉHO ČÍSLA\n")
-
+    title()
     while True:
         try:
-            p = int(input("Prvok: "))
-            m = int(input("Mocnina: "))
-            z = int(input("Modulo: "))
+            p = input("Prvok: ")
+            if p == "exit()" or p == "quit()":
+            	break
+
+            m = input("Mocnina: ")
+            if m == "exit()" or m == "quit()":
+            	break
+
+            z = input("Modulo: ")
+            if z == "exit()" or z == "quit()":
+            	break
+
+            p, m, z = int(p), int(m), int(z)
             if p < 1 or m < 1 or z < 1:
                 raise ValueError
         except (TypeError, ValueError):
@@ -22,6 +31,8 @@ def main():
         vys(p, m, z, results) # výsledný príklad
 
 
+def title():
+    print("\n\tMODULO UMOCNENÉHO ČÍSLA\n")
 
 
 def nm2(m):
