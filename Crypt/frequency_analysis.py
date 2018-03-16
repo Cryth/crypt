@@ -29,7 +29,6 @@ def title(text):
     print("\n\t{}\n".format(text.upper()))
 
 
-
 def _freqfile(file_name):
     with open(file_name, "r") as f:
         cp = 0  # celkovy pocet
