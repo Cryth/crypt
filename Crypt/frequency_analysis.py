@@ -11,7 +11,7 @@ files = [] # file names
 file_ca = [] # lists of character amounts
 
 def main():
-    print("\n\tFREKVENČNÁ ANALÝZA SÚBOROV\n")
+    title("Frekvenčná analýza súborov")
 
     for _ in col:
         file = input("File path: ")
@@ -23,6 +23,11 @@ def main():
         _bar(files[0])
     else:
         _plot()
+
+
+def title(text):
+    print("\n\t{}\n".format(text.upper()))
+
 
 
 def _freqfile(file_name):
