@@ -1,6 +1,6 @@
 # coding=utf-8
 def main():
-    title()
+    title("Square and multiply")
     while True:
         try:
             p = input("Prvok: ")
@@ -31,8 +31,8 @@ def main():
         vys(p, m, z, results) # výsledný príklad
 
 
-def title():
-    print("\n\tMODULO UMOCNENÉHO ČÍSLA\n")
+def title(text):
+    print("\n\t{}\n".format(text.upper()))
 
 
 def nm2(m):
