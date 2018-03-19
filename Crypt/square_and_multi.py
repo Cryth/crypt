@@ -5,15 +5,15 @@ def main():
         try:
             p = input("Prvok: ")
             if p == "exit()" or p == "quit()":
-            	break
+                break
 
             m = input("Mocnina: ")
             if m == "exit()" or m == "quit()":
-            	break
+                break
 
             z = input("Modulo: ")
             if z == "exit()" or z == "quit()":
-            	break
+                break
 
             p, m, z = int(p), int(m), int(z)
             if p < 1 or m < 1 or z < 1:
@@ -38,7 +38,7 @@ def title(text):
 def nm2(m):
     """ zistí najväčiu mocninu 2 """
     p2 = 1
-    while p2 < m:
+    while p2 <= m:
         p2 = p2 * 2
     return p2/2 if p2 > 1 else p2
 
